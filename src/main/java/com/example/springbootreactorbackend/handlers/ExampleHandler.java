@@ -19,5 +19,35 @@ public class ExampleHandler {
                 .flatMap(body -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                         .bodyValue("{\"message\": \"POST request handled with body: " + body + "\"}"));
     }
+
+    public Mono<ServerResponse> put(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"PUT request handled\"}");
+    }
+
+    public Mono<ServerResponse> delete(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"DELETE request handled\"}");
+    }
+
+    public Mono<ServerResponse> patch(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"PATCH request handled\"}");
+    }
+
+    public Mono<ServerResponse> options(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"OPTIONS request handled\"}");
+    }
+
+    public Mono<ServerResponse> head(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"HEAD request handled\"}");
+    }
+
+    public Mono<ServerResponse> trace(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"TRACE request handled\"}");
+    }
 }
 

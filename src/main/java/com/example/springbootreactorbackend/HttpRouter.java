@@ -23,29 +23,15 @@ public class HttpRouter {
     @Bean
     public RouterFunction<ServerResponse> routes(ExampleHandler handler) {
         return route()
-                .GET(
-                       "/hello",
-//                        RequestPredicates.accept(MediaType.APPLICATION_JSON),
-                        handler::get)
-                .POST(
-                        "/post",
-                        RequestPredicates.accept(MediaType.APPLICATION_JSON),
-                        handler::post)
+                .GET("/get", handler::get)
+                .POST("/post", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::post)
+                .PUT("/put", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::put)
+                .DELETE("/delete", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::delete)
+                .PATCH("/patch", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::patch)
+                .OPTIONS("/options", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::options)
+                .HEAD("/head", handler::head)
+//                .TRACE("/trace", handler::trace)
                 .build();
-//                .GET("/api/example").and(contentType(MediaType.TEXT_PLAIN)), handler::handleGet)
-//                .andRoute(POST("/api/example").and(contentType(MediaType.APPLICATION_JSON)), handler::handlePost);
     }
 
-//    @Bean
-//    public RouterFunction<ServerResponse> routes(ExampleHandler handler) {
-//
-//        return RouterFunctions
-//                .route(GET("/hello").and(accept(MediaType.APPLICATION_JSON)), handler::handleGet);
-//    }
-
-
-//    @Bean
-//    public ExampleHandler exampleHandler() {
-//        return new ExampleHandler();
-//    }
 }
