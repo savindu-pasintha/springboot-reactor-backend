@@ -1,14 +1,19 @@
-# Use Java 21.0.2 JDK base image
-FROM eclipse-temurin:21.0.2_13-jdk-alpine
-
-# Set working directory
+# ===== Stage 1: Build =====
+FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
-# Copy JAR file
-COPY build/libs/*.jar app.jar
+# Copy source files
+COPY --chown=gradle:gradle . .
 
-# Expose port
+# Build app
+RUN gradle build --no-daemon
+
+# ===== Stage 2: Run =====
+FROM eclipse-temurin:21.0.2_13-jdk-alpine
+WORKDIR /app
+
+# Copy jar from build stage
+COPY --from=build /app/build/libs/*.jar app.jar
+
 EXPOSE 8088
-
-# Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
