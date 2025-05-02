@@ -3,7 +3,7 @@
 # ===== CONFIGURATION =====
 IMAGE_NAME="your-app"
 CONTAINER_NAME="spring-app"
-PORT=8080
+PORT=8088
 PROFILE="prod"
 PLATFORM="linux/amd64"  # Change to "linux/arm64" for ARM environments
 # ========================
@@ -29,7 +29,7 @@ echo "- Profile: $PROFILE"
 echo "- Platform: $PLATFORM"
 
 docker run --platform $PLATFORM -d \
-  -p $PORT:8080 \
+  -p $PORT:$PORT \
   -e "SPRING_PROFILES_ACTIVE=$PROFILE" \
   --name $CONTAINER_NAME \
   $IMAGE_NAME

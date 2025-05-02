@@ -4,7 +4,7 @@ SETLOCAL
 :: ===== CONFIGURATION =====
 SET IMAGE_NAME=your-app
 SET CONTAINER_NAME=spring-app
-SET PORT=8080
+SET PORT=8088
 SET PROFILE=prod
 SET PLATFORM=linux/amd64
 :: ========================
@@ -29,7 +29,7 @@ echo - Profile: %PROFILE%
 echo - Platform: %PLATFORM%
 
 docker run --platform %PLATFORM% -d ^
-  -p %PORT%:8080 ^
+  -p %PORT%:%PORT% ^
   -e "SPRING_PROFILES_ACTIVE=%PROFILE%" ^
   --name %CONTAINER_NAME% ^
   %IMAGE_NAME%
