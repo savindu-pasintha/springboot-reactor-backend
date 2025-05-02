@@ -7,13 +7,14 @@ WORKDIR /app
 COPY build.gradle.kts settings.gradle.kts ./
 RUN gradle dependencies --no-daemon
 
-# Build application
+# Build application (produces both plain and boot jars)
 COPY src ./src
 RUN gradle build --no-daemon -x test
 
-# Extract layers (for faster startup)
+# Extract layers from the SPRING BOOT JAR (not the plain jar)
+# Explicitly target the -boot.jar or non-plain jar
 RUN mkdir -p /layers && \
-    java -Djarmode=layertools -jar /app/build/libs/*.jar extract --destination /layers
+    java -Djarmode=layertools -jar /app/build/libs/*[!plain]*.jar extract --destination /layers
 
 # Stage 2: Runtime
 FROM eclipse-temurin:21-jre-jammy
