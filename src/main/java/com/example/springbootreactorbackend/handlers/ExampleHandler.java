@@ -9,6 +9,10 @@ import reactor.core.publisher.Mono;
 @Component
 public class ExampleHandler {
 
+    public Mono<ServerResponse> home(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .bodyValue("{\"message\": \"/ GET request handled\"}");
+    }
     public Mono<ServerResponse> get(ServerRequest request) {
         return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
                 .bodyValue("{\"message\": \"GET request handled\"}");

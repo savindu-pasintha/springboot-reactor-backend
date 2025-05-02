@@ -23,6 +23,7 @@ public class HttpRouter {
     @Bean
     public RouterFunction<ServerResponse> routes(ExampleHandler handler) {
         return route()
+                .GET("/", handler::home)
                 .GET("/get", handler::get)
                 .POST("/post", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::post)
                 .PUT("/put", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::put)
