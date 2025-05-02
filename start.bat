@@ -2,8 +2,8 @@
 SETLOCAL
 
 :: ===== CONFIGURATION =====
-SET IMAGE_NAME=your-app
-SET CONTAINER_NAME=spring-app
+SET IMAGE_NAME=spring-app-image
+SET CONTAINER_NAME=spring-app-container
 SET PORT=8088
 SET PROFILE=prod
 SET PLATFORM=linux/amd64

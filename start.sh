@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ===== CONFIGURATION =====
-IMAGE_NAME="your-app"
-CONTAINER_NAME="spring-app"
+IMAGE_NAME="spring-app-image"
+CONTAINER_NAME="spring-app-container"
 PORT=8088
 PROFILE="prod"
 PLATFORM="linux/amd64"  # Change to "linux/arm64" for ARM environments
