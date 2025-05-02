@@ -31,6 +31,19 @@ dependencies {
 	testImplementation("io.projectreactor:reactor-test")
 }
 
+// Add these configurations at the bottom
+tasks.withType<Jar> {
+	enabled = false // Disable plain JAR generation
+}
+
+tasks.bootJar {
+	archiveFileName.set("app.jar") // Force specific JAR name
+	layered {
+		enabled = true // Explicitly enable layer tools
+		includeLayerTools = true
+	}
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
