@@ -1,6 +1,6 @@
 @echo off
 echo Building Spring Boot application...
-./gradlew clean build
+@REM ./gradlew clean build
 
 echo Building Docker image...
 docker build -t spring-app-image .
