@@ -1,4 +1,4 @@
-package com.example.springbootreactorbackend.webClient;
+package com.example.springbootreactorbackend.web.reactiveWebClient;
 
 import org.springframework.web.reactive.function.client.WebClient;
 

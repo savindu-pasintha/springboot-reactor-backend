@@ -8,4 +8,7 @@ import lombok.Setter;
 public class Model {
     private int id;;
     private String name;
+    private  String title;
+    private String body;
+    private  int userId;
 }

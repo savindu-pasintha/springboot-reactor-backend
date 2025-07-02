@@ -1,10 +1,11 @@
-package com.example.springbootreactorbackend.webClient;
+package com.example.springbootreactorbackend.web.reactiveWebClient;
 
 import com.example.springbootreactorbackend.models.Model;
 import com.example.springbootreactorbackend.utilities.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
@@ -13,31 +14,36 @@ import java.net.ConnectException;
 import java.time.Duration;
 import java.util.List;
 
-public class ExternalAPIsCallThroughWebClient extends  ReactiveWebClient  {
+@Service
+public class ExternalAPIsCallThroughWebClient extends ReactiveWebClient {
+
+    private final WebClient webClient;
+
     @Autowired
     Log log;
-    protected ExternalAPIsCallThroughWebClient(WebClient.Builder webClientBuilder) {
+
+    @Autowired
+    public ExternalAPIsCallThroughWebClient(WebClient.Builder webClientBuilder) {
         super(webClientBuilder);
+        this.webClient = webClientBuilder.build();
     }
 
-    public Mono<List<Model>> getData() {
-        return webClientBuilder
-                .build()
+    public Mono<List<Model>> getApiData() {
+        return webClient
                 .get()
-                .uri("http://example.com/get")
-                .accept(MediaType.ALL)
+                .uri("https://jsonplaceholder.typicode.com/posts")
+                .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Model>>() {})
-                .retryWhen(Retry.backoff(3, Duration.ofSeconds(3))
-                        .filter(throwable ->
-                        {
-                            log.debug("Error");
-                           return throwable.getCause().getCause() instanceof ConnectException;
-
-                        }
-                        )
+                .timeout(Duration.ofSeconds(2))
+                .retryWhen(
+                        Retry.backoff(3, Duration.ofSeconds(10))
+                                .filter(throwable -> {
+                                    log.debug("Retry error: {}" + throwable.toString());
+                                    return throwable instanceof ConnectException;
+                                })
                 )
-                .timeout(Duration.ofSeconds(3));
+                ;
     }
 
     public Mono<List<Model>> postData(Model passDataASBodyValue) {
